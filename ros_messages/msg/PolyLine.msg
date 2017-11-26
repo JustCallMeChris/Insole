@@ -1,0 +1,9 @@
+int16 id
+int16 numPoints
+uint8 colour_a
+uint8 colour_r
+uint8 colour_g
+uint8 colour_b
+int16 layer
+geometry_msgs/Point[] points
+float32 width_optional

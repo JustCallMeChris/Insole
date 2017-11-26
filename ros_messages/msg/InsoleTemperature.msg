@@ -1,0 +1,2 @@
+string deviceName
+int16 temperature

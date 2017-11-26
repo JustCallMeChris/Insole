@@ -1,0 +1,3 @@
+<launch>
+  <node name="ble_device_address" pkg="insole_driver" type="ble_device_address_node.py" respawn="false" output="screen"/>
+</launch>

@@ -1,0 +1,12 @@
+float32 x1
+float32 y1
+float32 x2
+float32 y2
+uint8[] data
+uint32 length
+int32 id
+int16 layer
+uint8 colour_a
+uint8 colour_r
+uint8 colour_g
+uint8 colour_b

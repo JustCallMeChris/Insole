@@ -1,0 +1,9 @@
+float32 x
+float32 y
+int16 id
+uint8 colour_a
+uint8 colour_r
+uint8 colour_g
+uint8 colour_b
+int16 layer
+float32 r_optional

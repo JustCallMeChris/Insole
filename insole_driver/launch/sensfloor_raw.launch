@@ -1,0 +1,3 @@
+<launch>
+  <node name="sensfloor_driver" pkg="sensfloor_driver" type="sensfloor_rawdata_driver.py" respawn="false" output="screen"/>
+</launch>

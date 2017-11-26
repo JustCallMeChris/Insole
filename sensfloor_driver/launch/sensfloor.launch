@@ -1,0 +1,4 @@
+<launch>
+  <node name="rviz" pkg="rviz" type="rviz" output="screen" args="-d $(find sensfloor_driver)/rviz/sensfloor.rviz" respawn="true" />
+  <node name="world_to_sensfloor_tf" pkg="tf" type="static_transform_publisher" args="0 0 0 0 0 0 1 world sensfloor 10" />
+</launch>

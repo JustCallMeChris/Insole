@@ -1,0 +1,6 @@
+uint8 ID
+geometry_msgs/Point Pos
+geometry_msgs/Point currentPointerPos
+geometry_msgs/Point filteredPointerPos
+float64 PointingCompletion
+std_msgs/ColorRGBA Color

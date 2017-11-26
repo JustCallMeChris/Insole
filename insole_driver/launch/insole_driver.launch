@@ -1,0 +1,19 @@
+<launch>
+  <node name="usb_cam" pkg="usb_cam" type="usb_cam_node" output="screen" >
+    <param name="video_device" value="/dev/video0" />
+    <param name="image_width" value="640" />
+    <param name="image_height" value="480" />
+    <param name="pixel_format" value="yuyv" />
+    <param name="camera_frame_id" value="usb_cam" />
+    <param name="io_method" value="mmap"/>
+  </node>
+  <node name="image_view" pkg="image_view" type="image_view" respawn="false" output="screen">
+    <remap from="image" to="/usb_cam/image_raw"/>
+    <param name="autosize" value="true" />
+    <param name="image_transport" value="compressed" />
+  </node>
+  <node name="sensfloor_driver" pkg="sensfloor_driver" type="sensfloor_rawdata_driver.py" respawn="false" output="screen"/>
+  <node name="ble_device_address" pkg="insole_driver" type="ble_device_address_node.py" respawn="false" output="screen"/>
+  <node name="insole_rawdata" pkg="insole_driver" type="insole_rawdata_node_backup.py" respawn="false" output="screen" />
+  #<node name="insole_pressure" pkg="insole_driver" type="measurement_node.py" respawn="false" output="screen" />
+</launch>

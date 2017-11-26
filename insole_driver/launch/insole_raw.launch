@@ -1,0 +1,4 @@
+<launch>
+  <node name="sensfloor_marker" pkg="sensfloor_driver" type="sensfloor_marker.py" respawn="false" output="screen"/>
+  <node name="insole_rawdata" pkg="insole_driver" type="insole_rawdata_node_backup.py" respawn="false" output="screen" />
+</launch>

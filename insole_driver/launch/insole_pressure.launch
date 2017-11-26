@@ -1,0 +1,3 @@
+<launch>
+  <node name="insole_pressure" pkg="insole_driver" type="measurement_node.py" respawn="false" output="screen" />
+</launch>

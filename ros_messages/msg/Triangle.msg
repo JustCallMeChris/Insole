@@ -1,0 +1,9 @@
+geometry_msgs/Point a
+geometry_msgs/Point b
+geometry_msgs/Point c
+uint8 colour_a
+uint8 colour_r
+uint8 colour_g
+uint8 colour_b
+int32 layer
+int32 id

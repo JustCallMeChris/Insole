@@ -1,0 +1,1 @@
+LaserPoint[] point

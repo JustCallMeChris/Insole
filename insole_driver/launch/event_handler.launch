@@ -1,0 +1,5 @@
+<launch>
+  <node name="Insole_Measurement" pkg="insole_driver" type="measurement_node.py" respawn="false" output="log"/>
+  <node name="InsoleEvent" pkg="insole_driver" type="insole_event.py" respawn="false" output="log"/>
+  <node name="SensfloorEvent" pkg="sensfloor_driver" type="sensfloor_event.py" respawn="false" output="log"/>
+</launch>

@@ -1,14 +1,18 @@
 #!/usr/bin/env python
 import RPi.GPIO as GPIO
+import logging as log
 import datetime
 import time
 
+log.basicConfig(filename='info.log',level=log.INFO, format='%(asctime)s %(message)s')
+buzzerPin = 11
+stepPin = 13
 
 def on():
-	GPIO.output(11, GPIO.HIGH)
+	GPIO.output(buzzerPin, GPIO.HIGH)
 
 def off():
-	GPIO.output(11, GPIO.LOW)
+	GPIO.output(buzzerPin, GPIO.LOW)
 
 def beep(x):
 	on()
@@ -20,24 +24,17 @@ def destroy():
 
 if __name__ == '__main__': 
 	try:
-            locked = False
-            print("Script runs")
+	    log.info("Script is running.")
             GPIO.setmode(GPIO.BOARD)
-            GPIO.setup(13, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-            GPIO.setup(11, GPIO.OUT)
+            GPIO.setup(stepPin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+            GPIO.setup(buzzerPin, GPIO.OUT)
             
             while True:
-                if GPIO.input(13) == False and locked == False:
-                    print("Step: "+str(datetime.datetime.now()))
+                if GPIO.input(stepPin) == False:
+		    log.info("Step: "+str(datetime.datetime.now()))
                     beep(0.2)
-                    locked = True
-                    
-                if GPIO.input(13) == True and locked == True:
-                    locked = False
-                    time.sleep(3)
-
+                    time.sleep(3) # stops logging next 3 seconds
                     
 	except KeyboardInterrupt:
-	    print("Script stopped")
+	    log.info("Script stopped.")
 	    destroy()
-

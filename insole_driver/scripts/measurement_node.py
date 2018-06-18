@@ -43,8 +43,8 @@ class Measurement(object):
         if data is not None:
             self.deviceName = data.deviceName
             self.rawBinary = data.rawData
-            self.pressPub = rospy.Publisher(self.deviceName+'/insole_pressure', InsolePressure, queue_size=1)
-
+            #self.pressPub = rospy.Publisher('/insole_pressure/'+self.deviceName, InsolePressure, queue_size=1)
+            self.pressPub = rospy.Publisher('/insole_pressure', InsolePressure, queue_size=1)
             try:
                 self.convert_raw_to_pressure()
                 skipIteration = self.totalPressure < 10
@@ -80,16 +80,17 @@ class Measurement(object):
         self.totalPressure = self.pressureX + self.pressureY + self.pressureZ
 
     def remove_dynamic_offset(self):
-        self.dataBuffer.append(self.totalPressure)
-
-        if (self.totalPressure - self.minVal) < 0:  # in case that min value is greater then measurement
-            self.minVal = self.minVal + self.totalPressure - self.minVal
-        if len(self.dataBuffer) > 200:  # determine lower limit over 200 iterations
-            self.minVal = min(self.dataBuffer) if min(self.dataBuffer) > self.minVal else self.minVal
-            self.dataBuffer = []
-            print "Offset: "+str(self.minVal)
-            logger.info("Offset: "+str(self.minVal))
-        self.totalPressure = self.totalPressure - self.minVal
+        if self.totalPressure > 40:
+            self.dataBuffer.append(self.totalPressure)
+            if (self.totalPressure - self.minVal) < 0:  # in case that min value is greater then measurement
+                self.minVal = 0
+            if len(self.dataBuffer) > 200:  # determine lower limit over 200 iterations
+                self.minVal = min(self.dataBuffer) if min(self.dataBuffer) > self.minVal else self.minVal
+                #print(self.dataBuffer)
+                self.dataBuffer = []
+                print "Offset: "+str(self.minVal)
+                #logger.info("Offset: "+str(self.minVal))
+            self.totalPressure = self.totalPressure - self.minVal
 
     def callback(self, data):
         self.convert_and_publish_binary(data)

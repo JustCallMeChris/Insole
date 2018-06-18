@@ -55,7 +55,6 @@ def publish_marker(points, header, marker_id):
 if __name__ == '__main__':
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.connect((TCP_IP, TCP_PORT))
-    print "Sensfloor initiiert!"
     rospy.init_node('sensfloor_rviz', anonymous=True)
     # register a function to close the socket which is called if the node quits or crashes.
     # no correctly closing the connection results in reconnection issues
@@ -64,7 +63,7 @@ if __name__ == '__main__':
 
 
     atexit.register(close_socket)
-
+    print "Sensfloor initiiert!"
     while not rospy.is_shutdown():
         data = s.recv(BUFFER_SIZE)
         # all sensfloor messages are 17 bytes long

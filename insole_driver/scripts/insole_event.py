@@ -4,10 +4,10 @@ import rospy
 import time
 import logging
 from ros_messages.msg import InsolePressure
-from std_msgs.msg import Int32
+from ros_messages.msg import InsoleEventMsg
 
 logger = logging.getLogger('Event-Insole   ')
-footpressEvent = rospy.Publisher('insole/event', Int32, queue_size=1)
+footpressEvent = rospy.Publisher('insole/event', InsoleEventMsg, queue_size=1)
 
 
 class InsoleEvent(object):
@@ -37,11 +37,15 @@ class InsoleEvent(object):
 
     def publish_insole_event(self):
 
+
         if self.totalPressure > 500 and not self.locked:
-            footpressEvent.publish(Int32(data=200))
-            event_time = str(int(round(time.time() * 1000)))
-            print "Event-Insole:    "+event_time
-            logger.info(event_time)
+            #print self.totalPressure
+
+            event_time = int(round(time.time() * 1000))
+            footpressEvent.publish(InsoleEventMsg(press=self.totalPressure, ms=event_time))
+            #print "Event-Insole:    "+str(event_time)
+            logger.debug(event_time)
+            logger.debug(self.totalPressure)
             self.locked = True
 
         if self.totalPressure < 500 and self.locked:
@@ -56,5 +60,6 @@ if __name__ == '__main__':
     insoleEvent = InsoleEvent()
     logger.info("Start Event Observer")
     rospy.init_node('InsoleEvent', anonymous=True)
-    rospy.Subscriber('/R01/insole_pressure', InsolePressure, insoleEvent.callback)
+   # rospy.Subscriber('/R01/insole_pressure', InsolePressure, insoleEvent.callback)
+    rospy.Subscriber('/insole_pressure', InsolePressure, insoleEvent.callback)
     rospy.spin()

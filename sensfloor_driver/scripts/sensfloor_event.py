@@ -7,6 +7,7 @@ from ros_messages.msg import CapacitanceCluster, CapacitancePoint, Point as Beam
 from visualization_msgs.msg import Marker
 from geometry_msgs.msg import Point
 from std_msgs.msg import ColorRGBA, Int32
+from ros_messages.msg import SensfloorEventMsg
 
 # a Sensor value of NEUTRAL_SENSOR_VALUE+SENSOR_COLOUR_RANGE will be coloured in full red
 SENSOR_COLOUR_RANGE = 30.0
@@ -19,7 +20,7 @@ RVIZ_MARKER_LIFETIME = rospy.Duration()
 BEAMER_MARKER_SCALE = 0.02
 
 markerPub = rospy.Publisher('sensfloor_marker', Marker, queue_size=1)
-footpressEvent = rospy.Publisher('sensfloor/event', Int32, queue_size=1)
+footpressEvent = rospy.Publisher('sensfloor/event', SensfloorEventMsg, queue_size=1)
 
 logger = logging.getLogger('Event-Sensfloor')
 
@@ -27,7 +28,7 @@ logger = logging.getLogger('Event-Sensfloor')
 class SensfloorMarker(object):
 
     def __init__(self, header=None, points=None):
-        self.init_logger()
+        #self.init_logger()
 
         self.header = header
         self.points = points
@@ -68,13 +69,12 @@ class SensfloorMarker(object):
                     self.dict.pop((x.x, x.y), None)
 
             if self.isEvent is True:
-                event_time = str(int(round(time.time() * 1000)))
-                print "Event-Sensfloor: " + event_time
-                logger.info(event_time)
-                footpressEvent.publish(Int32(data=200))
+                event_time = int(round(time.time() * 1000))
+                #print "Event-Sensfloor: " + str(event_time)
+                logger.debug(event_time)
+                footpressEvent.publish(SensfloorEventMsg(x=x.x, y=x.y, c=x.c, ms=event_time))
                 self.isEvent = False
-            else:
-                footpressEvent.publish(Int32(data=0))
+
 
             for key, value in self.dict.iteritems():
                 self.actualPoints.append(CapacitancePoint(x=key[0], y=key[1], c=value))

@@ -26,11 +26,12 @@ if __name__ == "__main__":
                 address = device['address'].encode('utf-8')
                 print "Found Device "+name
                 print "with Address "+address
-                if "Thorsis Ins." in name and name not in nameList:
+                if "Thorsis" in name and name not in nameList:
                     nameList.append(name)
                     addressList.append(address)
+		    devices = BleDevices(name=nameList, address=addressList)
+		    devicePub.publish(devices)
 
-        devices = BleDevices(name=nameList, address=addressList)
         adapter.disconnect
 
         while 1:

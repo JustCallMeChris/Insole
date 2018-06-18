@@ -64,7 +64,7 @@ add_message_files(
 	gestureInfo.msg
 	modusInfo.msg
 	Obstacles.msg
-    	robotObstacle.msg
+    robotObstacle.msg
 	Line.msg
 	Rectangle.msg
 	PolyLine.msg
@@ -77,13 +77,15 @@ add_message_files(
 	rotateDrawable.msg
 	Point.msg
 	Path.msg
-    	CapacitancePoint.msg
+    CapacitancePoint.msg
 	CapacitanceCluster.msg
 	InsoleRawData.msg
 	InsolePressure.msg
 	InsoleAcceleration.msg
 	InsoleTemperature.msg
    	BleDevices.msg
+	SensfloorEventMsg.msg
+	InsoleEventMsg.msg
 )
 
 ## Generate services in the 'srv' folder

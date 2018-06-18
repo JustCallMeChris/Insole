@@ -23,16 +23,24 @@ class InsoleSubcriber(object):
 
     def start_read_insole_rawdata(self):
 
-        self.deviceName = self.name.replace("Thorsis Ins. ESS ","")
+        #self.deviceName = self.name.replace("Thorsis","")
+        #self.deviceName = self.name.replace("Thorsis Ins.","")
+        #self.deviceName = self.name.replace("Thorsis Ins. ESS ","")
+
+        #If followig case appears, then hciconfig hci0 reset
+        #Can't init device hci0: Connection timed out (110)
+	#sudo service bluetooth restart 
 
         self.adapter = pygatt.GATTToolBackend(hci_device='hci0')
         self.adapter.start(True)
 
         print "Connecting Device "+self.deviceName
+        print "With Address "+self.address
         while 1:
             try:
                 time.sleep(2)
-                self.device = self.adapter.connect(self.address, 10)
+                #self.device = self.adapter.connect(self.address, 10)
+                self.device = self.adapter.connect('00:07:80:D4:09:2D')
                 time.sleep(2)
                 break
             except:
@@ -85,7 +93,7 @@ def callback(data):
 def subscribe_ble_dev_addr():
         rospy.init_node('Insole_Rawdata', anonymous=True)
         rospy.Subscriber('ble_devices_address', BleDevices, callback)
-       # rospy.spin()
+        rospy.spin()
 
 if __name__ == '__main__':
 

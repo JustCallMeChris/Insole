@@ -37,7 +37,6 @@ class InsoleEvent(object):
 
     def publish_insole_event(self):
 
-
         if self.totalPressure > 500 and not self.locked:
             #print self.totalPressure
 

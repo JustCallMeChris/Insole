@@ -86,6 +86,7 @@ add_message_files(
    	BleDevices.msg
 	SensfloorEventMsg.msg
 	InsoleEventMsg.msg
+	SensoleEventMsg.msg
 )
 
 ## Generate services in the 'srv' folder

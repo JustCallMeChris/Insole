@@ -18,15 +18,13 @@ class EventMatcher(object):
     def publish_matched_events(self):
         while True:
             if len(self.sensfloorEventList) is not 0 and len(self.sensfloorEventList) is not 0:
-                for iel in self.insoleEventList:
-                    for sel in self.sensfloorEventList:
-                        print(str((sel.ms-iel.ms)))
+                for sel in self.sensfloorEventList:
+                    for iel in self.insoleEventList:
                         if -150 <= (sel.ms-iel.ms) <= 150:
-                            print "MATCH!!! PARTYTIME!!!"
-                        self.sensfloorEventList.remove(sel)
-                    self.insoleEventList.remove(iel)
-                        #elif self.sensfloorEventList.index(sel) == len(self.sensfloorEventList)-1:
-                        #    self.sensfloorEventList.remove(sel)
+                           #TODO add here publisher for matched events
+                           self.sensfloorEventList = list()
+                           self.insoleEventList = list()
+                           break
 
 
     def insoleEventCallback(self, data):
